@@ -1,62 +1,59 @@
 
 function getInputValue(inputId){
-    const depositInput = document.getElementById(inputId);
+    const InputFeild = document.getElementById(inputId);
 
-    const depositAmount = depositInput.value;
+    const amountValue = InputFeild.value;
 
-    const depositAmountInt = parseFloat(depositAmount);
+    const amountInt = parseFloat(amountValue);
 
-    depositInput.value = '';
+    InputFeild.value = '';
 
-    return depositAmountInt;
+    return amountInt;
 }
 
+function updateTotalFeild(totalId, amount){
+    const totalElement = document.getElementById(totalId);
+
+    const totalAmount = totalElement.innerText;
+
+    const previousAmount = parseFloat(totalAmount);
+
+    totalElement.innerText = previousAmount + amount;
+}
+
+function updateBalance(amount, isAdd){
+    const totalBalance = document.getElementById('balance-total');
+
+    const totalBalanceText = totalBalance.innerText;
+
+    const previousTotalBalance = parseFloat(totalBalanceText);
+
+    if(isAdd == true){
+        totalBalance.innerText = previousTotalBalance + amount;
+    }
+    else{
+        totalBalance.innerText = previousTotalBalance - amount;
+    }
+}
+
+// DEPOSIT HANDEL
 document.getElementById('deposit-button').addEventListener('click', function () {
 
     const depositAmountInt = getInputValue('deposit-input');
 
-    const depositTotal = document.getElementById('deposit-total');
+    updateTotalFeild('deposit-total', depositAmountInt)
 
-    const depositTotalAmount = depositTotal.innerText;
-
-    const depositTotalAmountInt = parseFloat(depositTotalAmount);
-
-    depositTotal.innerText = depositTotalAmountInt + depositAmountInt;
-
-    //UPDATE BALANCE
-
-    const totalBalance = document.getElementById('balance-total');
-
-    const totalBalanceText = totalBalance.innerText;
-
-    const previousTotalBalance = parseFloat(totalBalanceText);
-
-    totalBalance.innerText = previousTotalBalance + depositAmountInt;
-
+    updateBalance(depositAmountInt, true)
 })
 
 // WITHDRAW HANDEL
-
 document.getElementById('withdraw-button').addEventListener('click', function(){
 
     const withdrawAmount = getInputValue('withdraw-input');
 
-    const withdrawTotal = document.getElementById('withdraw-total');
+    updateTotalFeild('withdraw-total', withdrawAmount);
 
-    const withdrawTotalAmount = withdrawTotal.innerText;
-
-    const withdrawTotalAmountText = parseFloat(withdrawTotalAmount);
-
-    withdrawTotal.innerText = withdrawAmount + withdrawTotalAmountText;
-
-    const totalBalance = document.getElementById('balance-total');
-
-    const totalBalanceText = totalBalance.innerText;
-
-    const previousTotalBalance = parseFloat(totalBalanceText);
-
-    totalBalance.innerText = previousTotalBalance - withdrawAmount;
-
+    updateBalance(withdrawAmount, false)
 
 })
 
@@ -73,24 +70,3 @@ document.getElementById('withdraw-input').addEventListener('keyup', function(eve
         document.getElementById("withdraw-button").click();
        }
 })
-/* else if(isValidCommand(message, "post")){
-    let announcement = message.content.substring(6);
-    let announcementsChannel = client.channels.announcementsChannel.get('874498102139166730');
-    if(announcementsChannel)
-        announcementsChannel.send(announcement)
-}
-
-const isValidCommand = (message, cmdName) => message.content.toLowerCase().startWith(prefix + cmdName); */
-
-/* module.exports ={
-    name:"post",
-    description: "make an annoucement to a channel",
-    authorPermission:"MANAGE_SERVER",
-    run: async(client, message, args) =>{
-      const channel = message.mentions.channels.first() || message.guild.channels.cache.find(c => c.id === args[0])
-      if(!channel)return message.reply("Channel not found")
-      const announcement = args.slice(1).join(" ")
-      if(!announcement) return message.reply("please give an annoucement!")
-      channel.send(announcement)
-    }
-  } */
