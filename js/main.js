@@ -1,6 +1,6 @@
 
-function getInputValue(){
-    const depositInput = document.getElementById('deposit-input');
+function getInputValue(inputId){
+    const depositInput = document.getElementById(inputId);
 
     const depositAmount = depositInput.value;
 
@@ -13,13 +13,7 @@ function getInputValue(){
 
 document.getElementById('deposit-button').addEventListener('click', function () {
 
-/*     const depositInput = document.getElementById('deposit-input');
-
-    const depositAmount = depositInput.value;
-
-    const depositAmountInt = parseFloat(depositAmount); */
-
-    const depositAmountInt = getInputValue();
+    const depositAmountInt = getInputValue('deposit-input');
 
     const depositTotal = document.getElementById('deposit-total');
 
@@ -39,18 +33,13 @@ document.getElementById('deposit-button').addEventListener('click', function () 
 
     totalBalance.innerText = previousTotalBalance + depositAmountInt;
 
-
 })
 
 // WITHDRAW HANDEL
 
 document.getElementById('withdraw-button').addEventListener('click', function(){
 
-    const withdrawInput = document.getElementById('withdraw-input');
-
-    const withdrawAmount = withdrawInput.value;
-
-    const withdrawAmountText = parseFloat(withdrawAmount);
+    const withdrawAmount = getInputValue('withdraw-input');
 
     const withdrawTotal = document.getElementById('withdraw-total');
 
@@ -58,7 +47,7 @@ document.getElementById('withdraw-button').addEventListener('click', function(){
 
     const withdrawTotalAmountText = parseFloat(withdrawTotalAmount);
 
-    withdrawTotal.innerText = withdrawAmountText + withdrawTotalAmountText;
+    withdrawTotal.innerText = withdrawAmount + withdrawTotalAmountText;
 
     const totalBalance = document.getElementById('balance-total');
 
@@ -68,7 +57,7 @@ document.getElementById('withdraw-button').addEventListener('click', function(){
 
     totalBalance.innerText = previousTotalBalance - withdrawAmount;
 
-    withdrawInput.value = '';
+
 })
 
 document.getElementById('deposit-input').addEventListener('keyup', function(event){
